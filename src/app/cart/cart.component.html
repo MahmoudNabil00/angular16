@@ -1,0 +1,62 @@
+<div class="container mt-5">
+    <!-- <div *ngIf="service.TotalItems$ |async else noItem" class="CartContainer mx-auto"> -->
+    <div *ngIf="service.signal_totalItems() > 0 else noItem" class="CartContainer mx-auto">
+      <div class="Header">
+        <h3 class="Heading">Shopping Cart</h3>
+  
+      </div>
+  
+      <!-- <ng-container *ngFor="let row of service.cartItems$ | async; let i =index"> -->
+      <ng-container *ngFor="let row of service.signal_cartItems(); let i = index">
+        <div class="row">
+          <div class="col-md-1">
+            <img [src]="row.image" style="width:100%" />
+          </div>
+          <div class="col-md-9">
+            <h1 class="title">{{row.title}}</h1>
+            <p>{{row.description}}</p>
+          </div>
+          <div class="col-md-2 end">
+            <div class="amount">{{row.price | currency}}</div>
+            <div class="save"><u>Save for later</u></div>
+            <div (click)="remove(i,row)" class="remove"><u>Remove</u></div>
+          </div>
+        </div>
+      </ng-container>
+      <hr>
+      <div class="checkout">
+        <div class="total">
+          <div>
+            <div class="Subtotal">Sub-Total</div>
+            <div class="items">2 items</div>
+          </div>
+          <!-- <div class="total-amount">{{this.service.subTotal$ | async}}</div> -->
+          <div class="total-amount">{{this.service.signal_subTotal()}}</div>
+        </div>
+        <button class="button">Checkout</button>
+      </div>
+    </div>
+  <ng-template #noItem>
+    <h1>Cart is Empty</h1>
+  </ng-template>
+  <div class="test-ng-prime">
+    <span (click)="testToggle()">
+      <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+    </span><br>
+      <p-rating [(ngModel)]="value" [stars]="3"></p-rating>
+  </div>
+  </div>
+ <button (click)="testViewChild(value)">click me</button>
+ <br>
+ <select (change)="onQuantitySelected($any($event.target).value)">
+  <option [value]="q" *ngFor="let q of qtyAvailable();let i = index">{{ q }}</option>
+</select>
+<h2>{{quantity()}}</h2>
+<input type="text" [(ngModel)]="addText">
+<button (click)="addOption()">add option</button>
+<hr>
+<br>
+<h1 for="signal">Test NgModel with Signal</h1>
+<input type="text" [(ngModel)]="NgModelValue" (input)="testInput(NgModelValue)">
+<h3>{{NgModelWithSignal()}}</h3>
+<h1>{{x()}}+{{y()}} the value of Z = {{z()}}</h1> <button (click)="changeTheValueOfZ()">change the value of Z</button>
